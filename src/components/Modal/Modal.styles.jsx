@@ -19,6 +19,8 @@ export const ModalWindiw = styled.div`
 `;
 
 export const Images = styled.img`
-  width: 800px;
-  height: 600px;
+  max-width: 800px;
+  max-height: 600px;
+  border: 3px solid #fff;
+  border-radius: 25px;
 `;
