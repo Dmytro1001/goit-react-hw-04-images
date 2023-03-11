@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Modal } from './Modal/Modal';
 import { HeaderSearchbar } from './Searchbar/Searchbar';
@@ -7,43 +7,33 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Container } from './App.styles';
 import { GlobalStyles } from './GlobalStyle';
 
-export class App extends Component {
-  state = {
-    isOpenModal: false,
-    textSearch: '',
-    currentImage: null,
+export const App = () => {
+  const [textSearch, setTextSearch] = useState('');
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [currentImage, setCurrentImage] = useState(null);
+
+  const toggleModal = () => {
+    setIsOpenModal(!isOpenModal);
   };
 
-  toggleModal = event => {
-    this.setState(prevState => ({
-      isOpenModal: !prevState.isOpenModal,
-    }));
+  const openModal = largeImage => {
+    setCurrentImage(largeImage);
+    setIsOpenModal(true);
   };
 
-  openModal = largeImage => {
-    this.setState({
-      currentImage: largeImage,
-      isOpenModal: true,
-    });
+  const handleSubmit = textSearch => {
+    setTextSearch(textSearch);
   };
 
-  handleSubmit = textSearch => {
-    this.setState({ textSearch });
-  };
-
-  render() {
-    const { isOpenModal, currentImage } = this.state;
-
-    return (
-      <Container>
-        <HeaderSearchbar onSubmit={this.handleSubmit} />
-        <ImageGallery value={this.state.textSearch} onClick={this.openModal} />
-        {isOpenModal && (
-          <Modal onClose={this.toggleModal} currentImage={currentImage} />
-        )}
-        <ToastContainer autoClose={3000} />
-        <GlobalStyles />
-      </Container>
-    );
-  }
-}
+  return (
+    <Container>
+      <HeaderSearchbar onSubmit={handleSubmit} />
+      <ImageGallery value={textSearch} onClick={openModal} />
+      {isOpenModal && (
+        <Modal onClose={toggleModal} currentImage={currentImage} />
+      )}
+      <ToastContainer autoClose={3000} />
+      <GlobalStyles />
+    </Container>
+  );
+};
