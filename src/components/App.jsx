@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Modal } from './Modal/Modal';
 import { HeaderSearchbar } from './Searchbar/Searchbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ScrollToTop from 'react-scroll-to-top';
 import { fetchImages } from '../services/getFetchImages';
 import { Container } from './App.styles';
 import { GlobalStyles } from './GlobalStyle';
@@ -17,17 +17,6 @@ export const App = () => {
   const [loading, setLoading] = useState(false);
   const [, setError] = useState(null);
   const [loadBtnShown, setLoadBtnShown] = useState(true);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [currentImage, setCurrentImage] = useState(null);
-
-  const toggleModal = () => {
-    setIsOpenModal(!isOpenModal);
-  };
-
-  const openModal = largeImage => {
-    setCurrentImage(largeImage);
-    setIsOpenModal(true);
-  };
 
   const handleSubmit = textSearch => {
     setTextSearch(textSearch);
@@ -73,15 +62,13 @@ export const App = () => {
   return (
     <Container>
       <HeaderSearchbar onSubmit={handleSubmit} />
-      {images.length > 0 && <ImageGallery value={images} onClick={openModal} />}
+      {images.length > 0 && <ImageGallery value={images} />}
 
       {images.length > 0 && !loading && loadBtnShown && (
         <Button onClick={handleLoadMore} />
       )}
       {loading && <Loader />}
-      {isOpenModal && (
-        <Modal onClose={toggleModal} currentImage={currentImage} />
-      )}
+      <ScrollToTop smooth={true} color="#0000ff" />
       <ToastContainer autoClose={3000} />
       <GlobalStyles />
     </Container>

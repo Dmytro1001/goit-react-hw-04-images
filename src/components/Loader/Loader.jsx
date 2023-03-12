@@ -1,18 +1,17 @@
-import { ThreeDots } from 'react-loader-spinner';
+import { Vortex } from 'react-loader-spinner';
 import { WrapperLoader } from './Loader.styles';
 
 export const Loader = () => {
   return (
     <WrapperLoader>
-      <ThreeDots
+      <Vortex
+        visible={true}
         height="80"
         width="80"
-        radius="9"
-        color="#000080"
-        ariaLabel="three-dots-loading"
+        ariaLabel="vortex-loading"
         wrapperStyle={{}}
-        wrapperClassName=""
-        visible={true}
+        wrapperClass="vortex-wrapper"
+        colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
       />
     </WrapperLoader>
   );
